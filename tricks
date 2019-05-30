@@ -1,0 +1,87 @@
+sample_elevation =crop_center(new_elevation_mean,20,20)
+
+sample_population =crop_center(new_population_mean,20,20)
+
+sample_population[4][2]
+
+zombies = np.zeros((sample_population.shape[0], sample_population.shape[1],15))
+Human_population= np.ceil(sample_population * 3000 * 15 * 15)
+Human_population[4][2]
+zombies[4][2][0]=math.floor(Human_population[4][2])
+Human_population[4][2]=0.0
+
+zombies_2d_array = np.sum(zombies, axis=-1)
+
+diction={}
+
+diction.setdefault((4,2), {})
+
+diction
+
+run =-1
+
+def parse_step1(Nodes,run):
+    tree_dict={}
+    List=[]
+    track_count = run+1
+    run = run + 1
+    shift_zombies_per_day()
+    for node in Nodes:
+        tree= tree_dict
+        tree.update({node: {}})
+        Zombies = get_zombies(node)# to get rid of 15 days old zombies since they wont move
+        x,y = node
+        cells = build_neighbor_pos_list((x,y),20,20)
+        List.extend(cells)
+        total_population = total_population_nbr_cell(cells)
+        for positions in cells:
+            angle,slope = calcaulte_elevation(node,positions)
+            if angle < 10.0 and total_population > 0 :
+                nbr_population = calcaute_population(positions)
+                tree[node].update({positions: {}})
+                zombies_prop = math.ceil(population_propogate(nbr_population,total_population,sum(Zombies),slope))
+                update_zombies(node,zombies_prop,positions)
+                print("i am here")
+        _nested_update(diction, node, tree,run)       
+    return List,track_count
+
+
+(16,40)(315,40)
+(16,182)(315,182)
+
+filtered_elevation
+
+
+
+
+filtered_population
+
+#(45,88)is brest and (296,141) is riken
+
+
+
+
+ current pos and next position  (99, 257) (99, 256)
+(173373, 504584, 108277, 0.4936728634291669)
+zombies going to propagate 18367
+sum of zombies here 108277
+79000
+13400.0
+29277
+4966.0
+value no of zombies 1
+[    0. 13400.  4966.     0.     0.     0.     0.     0.     0.     0.
+     0.     0.     0.     0.     0.]
+[    0 79000 29277     0     0     0     0     0     0     0     0     0
+     0     0     0]
+gettig issue here [    0 13401  4966     0     0     0     0     0     0     0     0     0
+     0     0     0]
+
+partial_zombies =[    0., 13400.,  4966.,     0.,     0.,     0.,     0.,     0.,     0.,     0.,
+     0.,     0.,     0.,     0.,     0.]
+
+zombies_current=[    0, 79000, 29277,     0,     0,     0,     0,     0,     0,     0,     0,     0,
+     0,     0,     0]
+
+
+
